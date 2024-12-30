@@ -1,0 +1,24 @@
+name: Enregistrement de recherche
+
+on:
+  repository_dispatch:
+    types: [search-request]
+
+jobs:
+  save-search:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Vérification du code source
+        uses: actions/checkout@v2
+
+      - name: Créer un fichier de recherche
+        run: |
+          echo "Recherche: ${{ github.event.client_payload.query }}" >> search-queries.txt
+          git config --global user.name "GitHub Actions"
+          git config --global user.email "actions@github.com"
+          git add search-queries.txt
+          git commit -m "Ajout d'une nouvelle recherche"
+          git push
+        env:
+          GITHUB_TOKEN: ${{ secrets.REPO_ACCESS_TOKEN }}
