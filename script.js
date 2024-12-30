@@ -3,12 +3,12 @@ document.getElementById('search-query').addEventListener('keypress', function(ev
         const query = document.getElementById('search-query').value;
 
         if (query.trim() !== '') {
-            // Envoie la recherche à GitHub Actions ou un autre serveur
-            fetch('https://api.github.com/repos/ton-utilisateur/ton-repository/dispatches', {
+            // Utiliser l'URL correcte de ton dépôt GitHub
+            fetch('https://api.github.com/repos/fenetre-identification/Identification/dispatches', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
-                    // Pas de token côté client ici
+                    'Authorization': `token ${process.env.GITHUB_TOKEN}`,  // Utilisation du token d'authentification
                 },
                 body: JSON.stringify({
                     event_type: 'search-request',  // Type d'événement personnalisé
