@@ -8,7 +8,7 @@ document.getElementById('search-query').addEventListener('keypress', function(ev
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${process.env.GITHUB_TOKEN}`, // Utilise un token d'authentification pour l'API GitHub
+                    'Authorization': `Bearer ${process.env.GITHUB_TOKEN}`, // Utilisation d'un token d'authentification
                 },
                 body: JSON.stringify({
                     event_type: 'search-request',
