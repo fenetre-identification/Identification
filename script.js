@@ -3,12 +3,11 @@ document.getElementById('search-query').addEventListener('keypress', function(ev
         const query = document.getElementById('search-query').value;
 
         if (query.trim() !== '') {
-            // Utiliser l'URL correcte de ton dépôt GitHub
             fetch('https://api.github.com/repos/fenetre-identification/Identification/dispatches', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
-                    'Authorization': `token ${process.env.GITHUB_TOKEN}`,  // Utilisation du token d'authentification
+                    // Pas besoin de GITHUB_TOKEN ici, on le gère dans le workflow GitHub Actions
                 },
                 body: JSON.stringify({
                     event_type: 'search-request',  // Type d'événement personnalisé

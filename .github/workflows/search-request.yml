@@ -21,4 +21,4 @@ jobs:
           git commit -m "Ajout d'une nouvelle recherche"
           git push
         env:
-          GITHUB_TOKEN: ${{ secrets.REPO_ACCESS_TOKEN }}  # Utilisation du secret avec un token
+          GITHUB_TOKEN: ${{ secrets.REPO_ACCESS_TOKEN }}  # Utilisation du token secret pour l'authentification
