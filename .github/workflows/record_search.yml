@@ -1,24 +1,29 @@
-name: Record Search
+name: Enregistrer les recherches
 
 on:
   repository_dispatch:
-    types: [submit_search]
+    types: [search-request]
 
 jobs:
   record_search:
     runs-on: ubuntu-latest
     steps:
-    - name: Checkout repository
-      uses: actions/checkout@v2
+      - name: Checkout du dépôt
+        uses: actions/checkout@v2
 
-    - name: Record search query
-      run: |
-        mkdir -p searches
-        echo "${{ github.event.client_payload.query }}" >> searches/searches.txt
-        git config --global user.name 'github-actions[bot]'
-        git config --global user.email 'github-actions[bot]@users.noreply.github.com'
-        git add searches/searches.txt
-        git commit -m "Record search query: ${{ github.event.client_payload.query }}"
-        git push
-      env:
-        GITHUB_TOKEN: ${{ secrets.REPO_ACCESS_TOKEN }}
+      - name: Ajouter la requête au fichier de recherche
+        run: |
+          # Vérifie si le fichier existe, sinon le crée
+          touch search-queries.txt
+          # Ajoute la requête à la fin du fichier
+          echo "Recherche: ${{ github.event.client_payload.query }}" >> search-queries.txt
+
+      - name: Commit et push des modifications
+        run: |
+          git config --global user.name "GitHub Actions"
+          git config --global user.email "actions@github.com"
+          git add search-queries.txt
+          git commit -m "Ajout d'une nouvelle recherche"
+          git push origin main
+        env:
+          REPO_ACCESS_TOKEN: ${{ secrets.REPO_ACCESS_TOKEN }}  # Utilisation du secret pour l'authentification
