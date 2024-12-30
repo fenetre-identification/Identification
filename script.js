@@ -3,12 +3,11 @@ document.getElementById('search-query').addEventListener('keypress', function(ev
         const query = document.getElementById('search-query').value;
         
         if (query.trim() !== '') {
-            // Envoie la requête à GitHub Actions via l'API 'repository_dispatch'
+            // Envoie la recherche à GitHub Actions (via un serveur ou GitHub API, mais sans token dans le client)
             fetch('https://api.github.com/repos/ton-utilisateur/ton-repository/dispatches', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${process.env.GITHUB_TOKEN}`, // Remplace par ton token sécurisé côté serveur
                 },
                 body: JSON.stringify({
                     event_type: 'search-request',
@@ -17,7 +16,7 @@ document.getElementById('search-query').addEventListener('keypress', function(ev
             })
             .then(response => response.json())
             .then(data => {
-                console.log('Recherche enregistrée:', data);
+                console.log('Recherche envoyée:', data);
             })
             .catch(error => {
                 console.error('Erreur:', error);
