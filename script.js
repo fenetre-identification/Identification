@@ -1,20 +1,18 @@
 document.getElementById('search-query').addEventListener('keypress', function(event) {
     if (event.key === 'Enter') {
         const query = document.getElementById('search-query').value;
-
+        
         if (query.trim() !== '') {
-            // Envoie la recherche à GitHub Actions pour l'enregistrer
+            // Envoie la requête à GitHub Actions via l'API 'repository_dispatch'
             fetch('https://api.github.com/repos/ton-utilisateur/ton-repository/dispatches', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${process.env.GITHUB_TOKEN}`, // Utilisation d'un token d'authentification
+                    'Authorization': `Bearer ${process.env.GITHUB_TOKEN}`, // Remplace par ton token sécurisé côté serveur
                 },
                 body: JSON.stringify({
                     event_type: 'search-request',
-                    client_payload: {
-                        query: query
-                    }
+                    client_payload: { query: query }
                 })
             })
             .then(response => response.json())
@@ -22,7 +20,7 @@ document.getElementById('search-query').addEventListener('keypress', function(ev
                 console.log('Recherche enregistrée:', data);
             })
             .catch(error => {
-                console.error('Erreur lors de l\'enregistrement:', error);
+                console.error('Erreur:', error);
             });
         }
     }

@@ -2,20 +2,19 @@ name: Enregistrer les recherches
 
 on:
   repository_dispatch:
-    types: [search-request]
+    types: [search-request]  # Le type d'événement déclencheur
 
 jobs:
   record_search:
     runs-on: ubuntu-latest
+
     steps:
       - name: Checkout du dépôt
         uses: actions/checkout@v2
 
-      - name: Ajouter la requête au fichier de recherche
+      - name: Ajouter la requête de recherche au fichier
         run: |
-          # Vérifie si le fichier existe, sinon le crée
-          touch search-queries.txt
-          # Ajoute la requête à la fin du fichier
+          touch search-queries.txt  # Crée le fichier s'il n'existe pas
           echo "Recherche: ${{ github.event.client_payload.query }}" >> search-queries.txt
 
       - name: Commit et push des modifications
@@ -26,4 +25,4 @@ jobs:
           git commit -m "Ajout d'une nouvelle recherche"
           git push origin main
         env:
-          REPO_ACCESS_TOKEN: ${{ secrets.REPO_ACCESS_TOKEN }}  # Utilisation du secret pour l'authentification
+          REPO_ACCESS_TOKEN: ${{ secrets.REPO_ACCESS_TOKEN }}  # Ton token d'authentification
