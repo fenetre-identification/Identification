@@ -1,0 +1,24 @@
+name: Record Search
+
+on:
+  repository_dispatch:
+    types: [submit_search]
+
+jobs:
+  record_search:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v2
+
+    - name: Record search query
+      run: |
+        mkdir -p searches
+        echo "${{ github.event.client_payload.query }}" >> searches/searches.txt
+        git config --global user.name 'github-actions[bot]'
+        git config --global user.email 'github-actions[bot]@users.noreply.github.com'
+        git add searches/searches.txt
+        git commit -m "Record search query: ${{ github.event.client_payload.query }}"
+        git push
+      env:
+        GITHUB_TOKEN: ${{ secrets.REPO_ACCESS_TOKEN }}
