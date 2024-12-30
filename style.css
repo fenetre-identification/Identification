@@ -1,28 +1,24 @@
-/* Style général de la page */
 body {
     font-family: Arial, sans-serif;
-    background-color: #f4f4f4;
+    text-align: center;
     margin: 0;
     padding: 0;
-    text-align: center;
+    background-color: #f4f4f4;
 }
 
 h1 {
     color: #333;
 }
 
-/* Style du champ de recherche */
-#search-query {
-    margin-top: 20px;
-    padding: 10px;
-    width: 80%;
-    max-width: 400px;
-    font-size: 18px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
+button {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+    font-size: 16px;
 }
 
-#search-query:focus {
-    outline: none;
-    border-color: #007BFF;
+button:hover {
+    background-color: #0056b3;
 }
