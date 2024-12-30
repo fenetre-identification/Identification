@@ -7,11 +7,10 @@ document.getElementById('search-query').addEventListener('keypress', function(ev
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
-                    // Pas besoin de GITHUB_TOKEN ici, on le gère dans le workflow GitHub Actions
                 },
                 body: JSON.stringify({
-                    event_type: 'search-request',  // Type d'événement personnalisé
-                    client_payload: { query: query }  // Passer la requête de recherche
+                    event_type: 'search-request',
+                    client_payload: { query: query }
                 })
             })
             .then(response => response.json())
