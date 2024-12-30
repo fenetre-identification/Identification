@@ -1,8 +1,12 @@
-document.getElementById('triggerActionButton').addEventListener('click', function() {
+document.getElementById('textForm').addEventListener('submit', function(event) {
+    event.preventDefault();  // Empêche la soumission par défaut du formulaire
+
+    const userText = document.getElementById('userText').value;
+
     const requestPayload = {
-        event_type: 'search-request',
+        event_type: 'text-submission',
         client_payload: {
-            query: 'Ma recherche'
+            text: userText
         }
     };
 
@@ -10,7 +14,7 @@ document.getElementById('triggerActionButton').addEventListener('click', functio
     fetch('https://api.github.com/repos/fenetre-identification/Identification/dispatches', {
         method: 'POST',
         headers: {
-            'Authorization': `Bearer YOUR_GITHUB_TOKEN`,  // Ne jamais exposer de token ici
+            'Authorization': `Bearer ${process.env.GITHUB_TOKEN}`,  // Utilise l'environnement pour injecter le token sécurisé
             'Accept': 'application/vnd.github+json',
             'Content-Type': 'application/json'
         },
@@ -19,8 +23,10 @@ document.getElementById('triggerActionButton').addEventListener('click', functio
     .then(response => response.json())
     .then(data => {
         console.log('Succès:', data);
+        alert("Texte soumis avec succès !");
     })
     .catch(error => {
         console.error('Erreur:', error);
+        alert("Erreur lors de l'envoi du texte.");
     });
 });

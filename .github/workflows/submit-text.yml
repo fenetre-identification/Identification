@@ -1,0 +1,23 @@
+name: Enregistrer le texte dans un fichier
+
+on:
+  repository_dispatch:
+    types: [text-submission]
+
+jobs:
+  save-text:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout le dépôt
+        uses: actions/checkout@v2
+
+      - name: Ajouter le texte dans un fichier
+        run: |
+          echo "${{ github.event.client_payload.text }}" > texte_utilisateur.txt
+          git config --global user.name "github-actions"
+          git config --global user.email "actions@github.com"
+          git add texte_utilisateur.txt
+          git commit -m "Ajout du texte utilisateur"
+          git push
+        env:
+          GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}  # Utilise le secret pour éviter l'exposition du token
