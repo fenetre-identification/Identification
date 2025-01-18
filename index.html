@@ -95,23 +95,16 @@
     function sendData() {
       const userInput = document.getElementById('userInput').value;
 
-      // Remplacez cette URL par l'URL de votre Google Apps Script
-      const endpoint = 'https://script.google.com/macros/s/AKfycbwCd_PnClKNdTIk8pciVZeYdGhGcJbtKskLqpIoSIPMHkqXab6siUjQyXuCFY7GwuMC/exec';
-
-      fetch(endpoint, {
+      fetch('http://localhost:3000/submit', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({ input: userInput }),
       })
-        .then(response => response.json())
+        .then(response => response.text())
         .then(data => {
-          if (data.status === 'success') {
-            alert('Data sent successfully!');
-          } else {
-            alert('Failed to send data.');
-          }
+          alert(data);
         })
         .catch(error => {
           console.error('Error:', error);
