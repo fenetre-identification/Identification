@@ -1,16 +1,28 @@
-<!DOCTYPE html>
-<html lang="fr">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Soumettre un texte</title>
-</head>
-<body>
-    <h1>Soumettre un texte</h1>
-    <form id="textForm">
-        <textarea id="userText" rows="4" cols="50" placeholder="Entrez votre texte ici"></textarea><br>
-        <button type="submit">Soumettre</button>
-    </form>
-    <script src="script.js"></script>
-</body>
-</html>
+<script>
+  function sendData() {
+    const userInput = document.getElementById('userInput').value;
+
+    // Remplacez l'URL suivante par votre Web App URL
+    const endpoint = 'https://script.google.com/macros/s/AKfycby0W6WYiO697tRCpDzT6C0O0dcJNviu56Sa6amMwGuaTyGNEY-1TV8c6AWNpJVEGPct/exec';
+
+    fetch(endpoint, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ input: userInput }),
+    })
+      .then(response => response.json())
+      .then(data => {
+        if (data.status === 'success') {
+          alert('Data sent successfully!');
+        } else {
+          alert('Failed to send data.');
+        }
+      })
+      .catch(error => {
+        console.error('Error:', error);
+        alert('An error occurred.');
+      });
+  }
+</script>
